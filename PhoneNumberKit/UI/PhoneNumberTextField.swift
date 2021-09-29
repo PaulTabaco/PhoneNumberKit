@@ -85,6 +85,8 @@ open class PhoneNumberTextField: UITextField, UITextFieldDelegate {
             self.updateFlag()
         }
     }
+    
+    public var countryCodePickerBackgroungColor: UIColor?
 
     public var withExamplePlaceholder: Bool = false {
         didSet {
@@ -337,7 +339,7 @@ open class PhoneNumberTextField: UITextField, UITextFieldDelegate {
     @available(iOS 11.0, *)
     @objc func didPressFlagButton() {
         guard withDefaultPickerUI else { return }
-        let vc = CountryCodePickerViewController(phoneNumberKit: phoneNumberKit)
+        let vc = CountryCodePickerViewController(phoneNumberKit: phoneNumberKit, countryCodePickerBackgroungColor: countryCodePickerBackgroungColor)
         vc.delegate = self
         if let nav = containingViewController?.navigationController, !PhoneNumberKit.CountryCodePicker.forceModalPresentation {
             nav.pushViewController(vc, animated: true)

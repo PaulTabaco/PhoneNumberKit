@@ -58,7 +58,7 @@ public class CountryCodePickerViewController: UITableViewController {
     }()
 
     var filteredCountries: [Country] = []
-
+    let countryCodePickerBackgroungColor: UIColor?
     public weak var delegate: CountryCodePickerDelegate?
 
     lazy var cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismissAnimated))
@@ -71,10 +71,12 @@ public class CountryCodePickerViewController: UITableViewController {
      */
     public init(
         phoneNumberKit: PhoneNumberKit,
-        commonCountryCodes: [String] = PhoneNumberKit.CountryCodePicker.commonCountryCodes)
+        commonCountryCodes: [String] = PhoneNumberKit.CountryCodePicker.commonCountryCodes,
+        countryCodePickerBackgroungColor: UIColor? = .clear)
     {
         self.phoneNumberKit = phoneNumberKit
         self.commonCountryCodes = commonCountryCodes
+        self.countryCodePickerBackgroungColor = countryCodePickerBackgroungColor
         super.init(style: .grouped)
         self.commonInit()
     }
@@ -82,6 +84,7 @@ public class CountryCodePickerViewController: UITableViewController {
     required init?(coder aDecoder: NSCoder) {
         self.phoneNumberKit = PhoneNumberKit()
         self.commonCountryCodes = PhoneNumberKit.CountryCodePicker.commonCountryCodes
+        self.countryCodePickerBackgroungColor = .clear
         super.init(coder: aDecoder)
         self.commonInit()
     }
@@ -93,6 +96,7 @@ public class CountryCodePickerViewController: UITableViewController {
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.backgroundColor = .clear
+        tableView.backgroundColor = countryCodePickerBackgroungColor
         navigationItem.searchController = searchController
         definesPresentationContext = true
     }
