@@ -71,6 +71,8 @@ open class PhoneNumberTextField: UITextField, UITextFieldDelegate {
             }
         }
     }
+    
+    public var placeholderPrefixType: PhoneNumberFormat = .international
 
     public var withFlag: Bool = false {
         didSet {
@@ -286,6 +288,9 @@ open class PhoneNumberTextField: UITextField, UITextFieldDelegate {
     func setup() {
         self.autocorrectionType = .no
         self.keyboardType = .phonePad
+        if #available(iOS 10.0, *) {
+            self.textContentType = UITextContentType.telephoneNumber
+        }
         super.delegate = self
     }
 
@@ -316,8 +321,7 @@ open class PhoneNumberTextField: UITextField, UITextFieldDelegate {
         guard self.withExamplePlaceholder else { return }
         if isEditing, !(self.text ?? "").isEmpty { return } // No need to update a placeholder while the placeholder isn't showing
 
-        let format = self.withPrefix ? PhoneNumberFormat.international : .national
-        let example = self.phoneNumberKit.getFormattedExampleNumber(forCountry: self.currentRegion, withFormat: format, withPrefix: self.withPrefix) ?? "12345678"
+        let example = self.phoneNumberKit.getFormattedExampleNumber(forCountry: self.currentRegion, ofType: PhoneNumberType.mobile, withFormat: placeholderPrefixType, withPrefix: self.withPrefix) ?? "12345678"
         let font = self.font ?? UIFont.preferredFont(forTextStyle: .body)
         let ph = NSMutableAttributedString(string: example, attributes: [.font: font])
 
