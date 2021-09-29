@@ -340,7 +340,7 @@ extension PhoneNumberKit {
         public static var commonCountryCodes: [String] = []
 
         /// When the Picker is shown from the textfield it is presented modally
-        public static var forceModalPresentation: Bool = true
+        public static var forceModalPresentation: Bool = false
     }
 }
 #endif
